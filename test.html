@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Marhaba Petroleum</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #DA202B;
+      --red-dark: #9a1019;
+      --black: #111111;
+      --grey: #F5F5F5;
+      --white: #FFFFFF;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--black);
+      background: var(--white);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1200px, 100% - 3rem);
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.97), rgba(255,255,255,0.9));
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    header.scrolled {
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      border-color: rgba(0,0,0,0.12);
+      background: #ffffff;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+      gap: 1.5rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* TODO: place M-LOGO.jpg in same folder as index.html and keep src="M-LOGO.jpg"
+       or change this path only (no C:\ when you put it online). */
+    .logo-img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.08rem;
+    }
+
+    .logo-title {
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+
+    .logo-subtitle {
+      font-weight: 300;
+      font-size: 0.7rem;
+      color: #777;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.8rem;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    nav ul li a {
+      font-size: 0.85rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      position: relative;
+      padding-bottom: 0.3rem;
+    }
+
+    nav ul li a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--red);
+      transition: width 0.22s ease;
+    }
+
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 0.6rem 1.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--red);
+      background: var(--red);
+      color: var(--white);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+
+    .nav-cta span.chevron {
+      font-size: 0.9rem;
+    }
+
+    /* MOBILE NAV */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 0.25rem;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      width: 20px;
+      height: 2px;
+      background: #333;
+      border-radius: 999px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 840px) {
+      .nav-menu {
+        position: absolute;
+        inset: 100% 0 auto 0;
+        background: #ffffff;
+        border-bottom: 1px solid rgba(0,0,0,0.08);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem 1.5rem 1.5rem;
+        gap: 1rem;
+        transform-origin: top;
+        transform: scaleY(0);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.22s ease, opacity 0.22s ease;
+      }
+
+      .nav-menu.open {
+        transform: scaleY(1);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+    }
+
+    /* HERO – FULLSCREEN SLIDER + BIG GLASS CARD */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 620px;
+      margin-top: 78px; /* space for fixed header */
+      overflow: hidden;
+    }
+
+    .hero-slider {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 1s ease, transform 7s ease;
+    }
+
+    .hero-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Your hero images */
+    .hero-slide-1 {  background-image: url('p1.jpg'); }
+    .hero-slide-2 {  background-image: url('p2.jpeg'); }
+    .hero-slide-3 {  background-image: url('p3.jpg'); }
+    .hero-slide-4 {  background-image: url('p4.jpeg'); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.65), rgba(0,0,0,0.25), rgba(0,0,0,0.75));
+      mix-blend-mode: multiply;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+    }
+
+    .hero-card {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 2.3rem 2.7rem 2.3rem;
+      border-radius: 26px;
+      background: radial-gradient(circle at top left, rgba(218,32,43,0.35), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(0,0,0,0.65), rgba(0,0,0,0.85));
+      background-blend-mode: soft-light;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 30px 100px rgba(0,0,0,0.75);
+      border: 1px solid rgba(255,255,255,0.18);
+      position: relative;
+      overflow: hidden;
+      animation: hero-pop 0.9s ease-out 0.15s both;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.09), transparent 55%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .hero-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes hero-pop {
+      from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero-card {
+        padding: 1.9rem 1.5rem 2.1rem;
+      }
+    }
+
+    /* logo-style text inside card */
+    .hero-card-logo {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-card-name {
+      font-size: 1.05rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .hero-card-line {
+      width: 76px;
+      height: 1px;
+      margin: 0.55rem auto;
+      background: linear-gradient(to right, transparent, var(--red), transparent);
+    }
+
+    .hero-card-sub {
+      font-size: 0.76rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .hero-card-title {
+      margin: 0 0 0.9rem;
+      font-size: 1.7rem;
+      text-align: center;
+    }
+
+    .hero-card-title span {
+      color: #ffd7d9;
+    }
+
+    .hero-card-text {
+      margin: 0 0 1.4rem;
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.86);
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    /* location chips (hero) */
+    .hero-locations {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.7rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-location-chip {
+      padding: 0.45rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.38);
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      font-size: 0.78rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      cursor: default;
+    }
+
+    .hero-location-chip.active {
+      background: var(--red);
+      border-color: var(--red);
+      box-shadow: 0 0 0 4px rgba(218,32,43,0.4);
+    }
+
+    /* hero ctas */
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.9rem;
+      align-items: center;
+      margin-bottom: 1.3rem;
+    }
+
+    .btn-primary {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 0.9rem 2rem;
+      border-radius: 999px;
+      background: var(--red);
+      color: var(--white);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 12px 40px rgba(218,32,43,0.6);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 45px rgba(218,32,43,0.7);
+      background: var(--red-dark);
+    }
+
+    .btn-secondary {
+      border-radius: 999px;
+      padding: 0.85rem 1.8rem;
+      border: 1px solid rgba(255,255,255,0.7);
+      background: transparent;
+      color: #fff;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-1px);
+    }
+
+    /* small meta row and slider dots */
+    .hero-meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.8);
+      padding-top: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      margin-top: 0.3rem;
+    }
+
+    .hero-meta-block {
+      text-align: center;
+    }
+
+    .hero-meta-label {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.7rem;
+      opacity: 0.9;
+    }
+
+    .hero-meta-value {
+      margin-top: 0.2rem;
+      font-weight: 500;
+    }
+
+    .hero-dots-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .hero-carousel-dots {
+      display: flex;
+      gap: 0.35rem;
+      align-items: center;
+    }
+
+    .hero-carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.35);
+      transition: width 0.2s ease, background 0.2s ease;
+    }
+
+    .hero-carousel-dot.active {
+      width: 18px;
+      background: var(--red);
+    }
+
+    /* SECTIONS GLOBAL */
+    section {
+      padding: 4.5rem 0;
+    }
+
+    .section-header {
+      border-left: 3px solid var(--red);
+      padding-left: 1rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.75rem;
+      color: var(--red);
+      margin-bottom: 0.3rem;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 1.7rem;
+    }
+
+    .section-subtitle {
+      margin-top: 0.7rem;
+      max-width: 40ch;
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* PRODUCTS / CATEGORIES */
+    #products {
+      background: var(--white);
+      border-top: 1px solid #eee;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.3rem;
+    }
+
+    @media (max-width: 1024px) {
+      .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .product-card {
+      border-radius: 1rem;
+      border: 1px solid #e5e5e5;
+      padding: 1.4rem 1.5rem 1.6rem;
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.22s ease, transform 0.22s ease, border-color 0.22s ease;
+    }
+
+    .product-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(218,32,43,0.07), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.22s ease;
+      pointer-events: none;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+      transform: translateY(-4px);
+      border-color: rgba(218,32,43,0.45);
+    }
+
+    .product-card:hover::before {
+      opacity: 1;
+    }
+
+    .product-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #888;
+      margin-bottom: 0.7rem;
+    }
+
+    .product-title {
+      margin: 0 0 0.4rem;
+      font-size: 1rem;
+    }
+
+    .product-desc {
+      font-size: 0.86rem;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 1.1rem;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #777;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .product-link {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.78rem;
+      color: var(--red-dark);
+    }
+
+    /* NEW: LOCATIONS SECTION */
+    #locations {
+      background: #0f0f10;
+      color: #f5f5f5;
+      border-top: 1px solid #111;
+      border-bottom: 1px solid #111;
+    }
+
+    #locations .section-header {
+      border-color: var(--red);
+    }
+
+    #locations .section-subtitle {
+      color: #ccc;
+    }
+
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.6rem;
+    }
+
+    @media (max-width: 1024px) {
+      .locations-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .locations-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .location-card {
+      border-radius: 1.2rem;
+      background: radial-gradient(circle at top left, rgba(218,32,43,0.3), rgba(9,9,9,0.95));
+      border: 1px solid rgba(255,255,255,0.15);
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+      transform-origin: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .location-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 60px rgba(0,0,0,0.9);
+      border-color: rgba(218,32,43,0.7);
+    }
+
+    .location-media {
+      height: 170px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .location-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 55%);
+    }
+
+
+    .location-dubai   { background-image: url('Dubai.jpg'); }
+    .location-fujairah{ background-image: url('Fujeirah.jpg'); }
+    .location-erbil   { background-image: url('Erbil.jpg'); }
+
+    .location-body {
+      padding: 1.3rem 1.4rem 1.4rem;
+    }
+
+    .location-pill {
+      display: inline-block;
+      padding: 0.25rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.4);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 0.6rem;
+    }
+
+    .location-title {
+      margin: 0 0 0.25rem;
+      font-size: 1.1rem;
+    }
+
+    .location-sub {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      opacity: 0.85;
+      margin-bottom: 0.6rem;
+    }
+
+    .location-text {
+      font-size: 0.86rem;
+      color: #dcdcdc;
+      line-height: 1.7;
+      margin-bottom: 0.9rem;
+    }
+
+    .location-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #c9c9c9;
+    }
+
+    .location-link {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.76rem;
+      color: #ffd7d9;
+    }
+
+    /* WHO WE ARE */
+    #who-we-are {
+      background: var(--grey);
+      border-top: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 3rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .about-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .about-text p {
+      margin: 0 0 1rem;
+      font-size: 0.9rem;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    .about-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 1.4rem;
+    }
+
+    .about-metric-card {
+      border-radius: 0.9rem;
+      padding: 0.9rem 1.1rem;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      min-width: 140px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .about-metric-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .about-metric-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--red-dark);
+      margin-bottom: 0.1rem;
+    }
+
+    .about-metric-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #777;
+    }
+
+    .about-visual {
+      background: #ffffff;
+      border-radius: 1.1rem;
+      border: 1px solid #dddddd;
+      padding: 1.4rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    }
+
+    .about-visual-main {
+      border-radius: 0.9rem;
+      height: 210px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .about-visual-main { background-image: url('p7.png'); }
+
+    .about-visual-tag {
+      position: absolute;
+      bottom: 0.8rem;
+      left: 0.9rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      font-size: 0.7rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .about-visual-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: #555;
+    }
+
+    .about-pill {
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--red);
+      color: var(--red-dark);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    /* CAREERS (SHORTER / MORE ATTRACTIVE) */
+    #careers {
+      background: var(--white);
+    }
+
+    .careers-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 2.8rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .careers-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .careers-highlight {
+      border-radius: 1rem;
+      border-left: 3px solid var(--red);
+      padding: 1.6rem 1.7rem;
+      background: #fafafa;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+    }
+
+    .careers-title {
+      margin: 0 0 0.7rem;
+      font-size: 1.3rem;
+    }
+
+    .careers-text {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 0.9rem;
+    }
+
+    .careers-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .careers-tag {
+      padding: 0.25rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      font-size: 0.75rem;
+      background: #ffffff;
+    }
+
+    .careers-note {
+      font-size: 0.78rem;
+      color: #777;
+      margin-top: 0.7rem;
+    }
+
+    .careers-openings {
+      display: grid;
+      gap: 1rem;
+      font-size: 0.86rem;
+    }
+
+    .job-card {
+      border-radius: 0.9rem;
+      border: 1px solid #e5e5e5;
+      padding: 1rem 1.1rem;
+      background: #ffffff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .job-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.08);
+      border-color: rgba(218,32,43,0.5);
+    }
+
+    .job-role {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .job-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: #777;
+      margin-bottom: 0.4rem;
+    }
+
+    .job-badge {
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid #e0e0e0;
+      background: #fafafa;
+    }
+
+    .job-cta {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--red-dark);
+    }
+
+    /* CONTACT */
+    #contact {
+      background: var(--grey);
+      border-top: 1px solid #e5e5e5;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 2.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-card {
+      border-radius: 1rem;
+      padding: 1.6rem 1.7rem;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+    }
+
+    .contact-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.1rem;
+      font-size: 0.88rem;
+    }
+
+    .contact-row-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #777;
+      margin-bottom: 0.15rem;
+    }
+
+    .contact-row-value {
+      font-weight: 500;
+    }
+
+    .contact-form {
+      border-radius: 1rem;
+      padding: 1.7rem 1.7rem 1.8rem;
+      background: #ffffff;
+      border: 1px solid var(--red);
+    }
+
+    .contact-form label {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: #777;
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%;
+      border-radius: 0.6rem;
+      border: 1px solid #dddddd;
+      padding: 0.7rem 0.8rem;
+      font-family: inherit;
+      font-size: 0.86rem;
+      margin-bottom: 0.9rem;
+      outline: none;
+      background: #ffffff;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus,
+    .contact-form select:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 1px rgba(218,32,43,0.4);
+    }
+
+    .contact-form textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .contact-helper {
+      font-size: 0.76rem;
+      color: #777;
+      margin-top: 0.3rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0a0a0a;
+      color: rgba(255,255,255,0.75);
+      padding: 1.8rem 0;
+      font-size: 0.8rem;
+      border-top: 2px solid var(--red);
+    }
+
+    .footer-layout {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+    }
+
+    .footer-links a {
+      opacity: 0.8;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--red);
+    }
+
+    /* SCROLL REVEAL ANIMATION */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header id="site-header">
+    <div class="container">
+      <div class="nav">
+        <div class="logo">
+          <img src="M-LOGO.png" alt="Marhaba Petroleum" class="logo-img" />
+        </div>
+
+        <div class="nav-toggle" id="nav-toggle">
+          <span></span><span></span><span></span>
+        </div>
+
+        <div class="nav-menu" id="nav-menu">
+          <nav>
+            <ul>
+              <li><a href="#products">Products</a></li>
+              <li><a href="#locations">Locations</a></li>
+              <li><a href="#who-we-are">Who we are</a></li>
+              <li><a href="#careers">Careers</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+          <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            Contact us <span class="chevron">›</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div style="height:3px;background:var(--red);width:100%;"></div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-slider">
+      <div class="hero-slide hero-slide-1 active"></div>
+      <div class="hero-slide hero-slide-2"></div>
+      <div class="hero-slide hero-slide-3"></div>
+      <div class="hero-slide hero-slide-4"></div>
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="container">
+        <div class="hero-card">
+          <div class="hero-card-inner">
+            <div class="hero-card-logo">
+              <div class="hero-card-name">MARHABA PETROLEUM</div>
+              <div class="hero-card-line"></div>
+              <div class="hero-card-sub">Regional petroleum supply &amp; logistics</div>
+            </div>
+
+            <h1 class="hero-card-title">
+              Supplying <span>reliable energy</span> across Dubai, Fujairah &amp; Erbil.
+            </h1>
+
+            <p class="hero-card-text">
+              From fuels and gasoline to lubricants and marine bunkering, Marhaba Petroleum delivers
+              disciplined supply, clear documentation and on-time service in the GCC and Iraq.
+            </p>
+
+            <div class="hero-locations">
+              <button type="button" class="hero-location-chip active">Dubai, UAE</button>
+              <button type="button" class="hero-location-chip">Fujairah, UAE</button>
+              <button type="button" class="hero-location-chip">Erbil, Iraq</button>
+            </div>
+
+            <div class="hero-cta-group">
+              <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+                View product categories →
+              </button>
+              <button class="btn-secondary" onclick="document.getElementById('locations').scrollIntoView({behavior:'smooth'})">
+                Explore our locations
+              </button>
+            </div>
+
+            <div class="hero-meta-strip">
+              <div class="hero-meta-block">
+                <div class="hero-meta-label">Segments</div>
+                <div class="hero-meta-value">Fleet • Marine • Industrial • Retail</div>
+              </div>
+              <div class="hero-meta-block">
+                <div class="hero-meta-label">Focus</div>
+                <div class="hero-meta-value">Safety • Quality • Reliability</div>
+              </div>
+              <div class="hero-meta-block hero-dots-wrap">
+                <div class="hero-meta-label">Hero images</div>
+                <div class="hero-carousel-dots">
+                  <span class="hero-carousel-dot active"></span>
+                  <span class="hero-carousel-dot"></span>
+                  <span class="hero-carousel-dot"></span>
+                  <span class="hero-carousel-dot"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW: LOCATIONS CARDS -->
+  <section id="locations">
+    <div class="container reveal">
+      <div class="section-header">
+        <div class="section-kicker">Our locations</div>
+        <h2 class="section-title">Three strategic hubs serving your operations.</h2>
+        <p class="section-subtitle">
+          Visualize your supply points with real locations: Dubai for corporate HQ, Fujairah for port &amp; storage,
+          and Erbil for on-the-ground fleet and construction support.
+        </p>
+      </div>
+
+      <div class="locations-grid">
+        <!-- DUBAI -->
+        <article class="location-card">
+          <div class="location-media location-dubai">
+            <!-- TODO: set dubai.jpg in CSS above -->
+          </div>
+          <div class="location-body">
+            <div class="location-pill">Head office</div>
+            <h3 class="location-title">Dubai, UAE</h3>
+            <div class="location-sub">Business &amp; coordination hub</div>
+            <p class="location-text">
+              Commercial center for key accounts, contracts and regional coordination across all segments.
+            </p>
+            <div class="location-meta">
+              <span>Business Bay • UAE</span>
+              <span class="location-link">View details →</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- FUJAIRAH -->
+        <article class="location-card">
+          <div class="location-media location-fujairah">
+            <!-- TODO: set fujairah.jpg in CSS above -->
+          </div>
+          <div class="location-body">
+            <div class="location-pill">Marine &amp; storage</div>
+            <h3 class="location-title">Fujairah, UAE</h3>
+            <div class="location-sub">Port &amp; terminal operations</div>
+            <p class="location-text">
+              Strategic fuel and marine hub with storage, bunkering and terminal services for vessels and bulk clients.
+            </p>
+            <div class="location-meta">
+              <span>Port &amp; tank farms</span>
+              <span class="location-link">View details →</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ERBIL -->
+        <article class="location-card">
+          <div class="location-media location-erbil">
+            <!-- TODO: set erbil.jpg in CSS above -->
+          </div>
+          <div class="location-body">
+            <div class="location-pill">Field operations</div>
+            <h3 class="location-title">Erbil, Iraq</h3>
+            <div class="location-sub">Fleet &amp; project supply</div>
+            <p class="location-text">
+              Close to fleets, construction and industrial sites, with tailored supply programs and local support.
+            </p>
+            <div class="location-meta">
+              <span>Kurdistan – Iraq</span>
+              <span class="location-link">View details →</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS / CATEGORIES -->
+  <section id="products">
+    <div class="container reveal">
+      <div class="section-header">
+        <div class="section-kicker">Products &amp; categories</div>
+        <h2 class="section-title">Structured portfolio for every energy need.</h2>
+        <p class="section-subtitle">
+          Clear product families, technical support and logistics coordination across Dubai, Fujairah and Erbil.
+        </p>
+      </div>
+
+      <div class="products-grid">
+        <article class="product-card">
+          <div class="product-tag">Category</div>
+          <h3 class="product-title">Fuels &amp; Gasoline</h3>
+          <p class="product-desc">
+            Diesel and gasoline grades for fleets, service stations and industrial consumers, aligned with regional specifications.
+          </p>
+          <div class="product-meta">
+            <span>On-road • Off-road • Power</span>
+            <a href="#contact" class="product-link">Request data sheet →</a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-tag">Category</div>
+          <h3 class="product-title">Lubricants &amp; Greases</h3>
+          <p class="product-desc">
+            Engine oils, hydraulic fluids and industrial lubricants designed for performance and extended equipment life.
+          </p>
+          <div class="product-meta">
+            <span>Automotive • Industrial • Marine</span>
+            <a href="#contact" class="product-link">Talk to an expert →</a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-tag">Category</div>
+          <h3 class="product-title">Marine &amp; Bunkering</h3>
+          <p class="product-desc">
+            Marine fuels supply in strategic ports with strict quality control and reliable delivery windows.
+          </p>
+          <div class="product-meta">
+            <span>Dubai • Fujairah</span>
+            <a href="#contact" class="product-link">View marine offer →</a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-tag">Service</div>
+          <h3 class="product-title">Storage &amp; Terminals</h3>
+          <p class="product-desc">
+            Storage and terminal solutions tailored to long-term volume strategies and risk management.
+          </p>
+          <div class="product-meta">
+            <span>Tank farms • Depots</span>
+            <a href="#contact" class="product-link">Discuss capacity →</a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-tag">Service</div>
+          <h3 class="product-title">Fleet &amp; Commercial</h3>
+          <p class="product-desc">
+            Dedicated supply programs for fleets, construction and industrial operators with predictable costs.
+          </p>
+          <div class="product-meta">
+            <span>Contracts • Volume planning</span>
+            <a href="#contact" class="product-link">Start a brief →</a>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-tag">Support</div>
+          <h3 class="product-title">Technical &amp; HSE</h3>
+          <p class="product-desc">
+            Technical support and HSE standards aligned with international best practices for safe operations.
+          </p>
+          <div class="product-meta">
+            <span>Audits • Training</span>
+            <a href="#contact" class="product-link">Schedule a call →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO WE ARE -->
+  <section id="who-we-are">
+    <div class="container reveal">
+      <div class="section-header">
+        <div class="section-kicker">Who we are</div>
+        <h2 class="section-title">Regional operator, global discipline.</h2>
+        <p class="section-subtitle">
+          Inspired by global players, Marhaba Petroleum is built around transparent operations,
+          quality traceability and long-term partnerships.
+        </p>
+      </div>
+
+      <div class="about-layout">
+        <div class="about-text">
+          <p>
+            With operational hubs across Dubai, Fujairah and Erbil, we support customers from mobility
+            and construction to marine and industrial segments.
+          </p>
+          <p>
+            Our focus: safe supply, clear documentation and responsive teams, so your operations run
+            without uncertainty around fuels and lubricants.
+          </p>
+          <div class="about-metrics">
+            <div class="about-metric-card">
+              <div class="about-metric-value">24/7</div>
+              <div class="about-metric-label">Operational support</div>
+            </div>
+            <div class="about-metric-card">
+              <div class="about-metric-value">3</div>
+              <div class="about-metric-label">Core locations</div>
+            </div>
+            <div class="about-metric-card">
+              <div class="about-metric-value">100%</div>
+              <div class="about-metric-label">Quality traceability</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-visual">
+          <div class="about-visual-main">
+            <!-- control-room image already set in CSS -->
+            <div class="about-visual-tag">Control &amp; logistics view</div>
+          </div>
+          <div class="about-visual-footer">
+            <div>Centralized visibility on inventory, flows and safety indicators.</div>
+            <div class="about-pill">GCC • Iraq • Regional</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAREERS (SHORT VERSION) -->
+  <section id="careers">
+    <div class="container reveal">
+      <div class="section-header">
+        <div class="section-kicker">Careers</div>
+        <h2 class="section-title">Grow your career in energy.</h2>
+        <p class="section-subtitle">
+          Lean teams, clear processes and exposure to real operations across our three locations.
+        </p>
+      </div>
+
+      <div class="careers-layout">
+        <div class="careers-highlight">
+          <h3 class="careers-title">Join a focused regional energy team.</h3>
+          <p class="careers-text">
+            We are building disciplined commercial and operations teams across Dubai, Fujairah and Erbil.
+            If you enjoy responsibility and direct impact, Marhaba Petroleum may be your next step.
+          </p>
+          <div class="careers-tags">
+            <span class="careers-tag">Operations &amp; HSE</span>
+            <span class="careers-tag">Support roles</span>
+          </div>
+          <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            Share your profile →
+          </button>
+          <div class="careers-note">
+            Send us your CV with preferred location and role; we will reach out when a matching position opens.
+          </div>
+        </div>
+
+        <div class="careers-openings">
+          <div class="job-card">
+            <div class="job-role">Sales Manager – Fuels &amp; Lubricants</div>
+            <div class="job-meta">
+              <span class="job-badge">Dubai</span>
+              <span class="job-badge">Full-time</span>
+            </div>
+            <div class="job-cta">Sample role for presentation</div>
+          </div>
+
+          <div class="job-card">
+            <div class="job-role">Operations Supervisor – Terminal</div>
+            <div class="job-meta">
+              <span class="job-badge">Fujairah</span>
+              <span class="job-badge">HSE focus</span>
+            </div>
+            <div class="job-cta">Sample role for presentation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container reveal">
+      <div class="section-header">
+        <div class="section-kicker">Contact</div>
+        <h2 class="section-title">Let’s discuss your supply needs.</h2>
+        <p class="section-subtitle">
+          Share your volume, locations and timing; our team will design a clear and efficient supply approach.
+        </p>
+      </div>
+
+      <div class="contact-layout">
+        <div class="contact-card">
+          <h3 style="margin-top:0;">Head office &amp; hubs</h3>
+          <div class="contact-grid">
+            <div>
+              <div class="contact-row-label">Dubai</div>
+              <div class="contact-row-value">xxxxxx – United Arab Emirates</div>
+            </div>
+            <div>
+              <div class="contact-row-label">Fujairah</div>
+              <div class="contact-row-value">xxxxxx – United Arab Emirates</div>
+            </div>
+            <div>
+              <div class="contact-row-label">Erbil</div>
+              <div class="contact-row-value">xxxxxx – Iraq</div>
+            </div>
+            <div>
+              <div class="contact-row-label">Email</div>
+              <div class="contact-row-value">info@marhabapetroleum.com</div>
+            </div>
+            <div>
+              <div class="contact-row-label">Phone</div>
+              <div class="contact-row-value">+971 -- --- ----</div>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form">
+          <h3 style="margin-top:0;">Send us a brief</h3>
+
+          <label for="cf-name">Name</label>
+          <input id="cf-name" type="text" placeholder="Your full name" />
+
+          <label for="cf-company">Company</label>
+          <input id="cf-company" type="text" placeholder="Company name" />
+
+          <label for="cf-email">Email</label>
+          <input id="cf-email" type="email" placeholder="your@email.com" />
+
+          <label for="cf-subject">Request type</label>
+          <select id="cf-subject">
+            <option value="">Choose an option</option>
+            <option>Product &amp; pricing</option>
+            <option>Long-term supply</option>
+            <option>Logistics &amp; storage</option>
+            <option>Careers</option>
+            <option>Other</option>
+          </select>
+
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" placeholder="Briefly describe your project, volume and locations."></textarea>
+
+          <button type="button" class="btn-primary" style="margin-top:0.2rem;">
+            Submit inquiry →
+          </button>
+          <div class="contact-helper">
+            This is a prototype form. Connect it to your backend or email service in production.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-layout">
+      <div>© <span id="year"></span> Marhaba Petroleum. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="#top">Back to top</a>
+        <a href="#products">Products</a>
+        <a href="#locations">Locations</a>
+        <a href="#who-we-are">Who we are</a>
+        <a href="#careers">Careers</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // YEAR
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // HEADER SCROLL EFFECT
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // MOBILE NAV
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('open');
+    });
+
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+      });
+    });
+
+    // HERO SLIDER
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-carousel-dot');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+    }
+
+    setInterval(() => {
+      const next = (currentSlide + 1) % slides.length;
+      showSlide(next);
+    }, 6000);
+
+    // SCROLL REVEAL
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealElements.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
